@@ -31,7 +31,7 @@
 				</view>
 			</view>
 		</view>
-		
+		<tbAuth :modalShow="tbAuthShow" @close="closeTbAuthModal" :eleTask="eleTask"></tbAuth>
 	</view>
 </template>
 
@@ -40,7 +40,8 @@
 		data() {
 			return {
 				task: [],
-				
+				tbAuthShow: false,
+				eleTask: {},
 			};
 		},
 		onShow(){
@@ -64,14 +65,19 @@
 			},
 			doTask(index, i){
 				let tashDetail = this.task[index]['list'][i]
-				if(tashDetail.package && tashDetail.package.minapp){
-					wx.navigateToMiniProgram({
-					  appId: tashDetail.package.minapp.appid,
-					  path: tashDetail.package.minapp.path,
-					  success(res) {
-						// 打开成功
-					  }
-					})
+				if(tashDetail.package){
+					if(tashDetail.package.minapp){
+						wx.navigateToMiniProgram({
+						  appId: tashDetail.package.minapp.appid,
+						  path: tashDetail.package.minapp.path,
+						  success(res) {
+							// 打开成功
+						  }
+						})
+					}else{
+						this.eleTask = tashDetail
+						this.tbAuthShow = true
+					}
 				}
 				this.$api.taskDo(tashDetail.alias).then((res)=>{
 					if(res.msg){
@@ -88,6 +94,9 @@
 					    duration: 2000
 					});
 				})
+			},
+			closeTbAuthModal(){
+				this.tbAuthShow = false
 			},
 		}
 	}

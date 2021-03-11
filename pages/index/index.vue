@@ -9,8 +9,8 @@
 				<view class="hb-hd-content">
 					<view class="hb-hd-content-head">
 						<view class="hb-hd-content-head-user">
-							<image :src="isLogin ? userInfo.avatarUrl : '/static/images/default-logo.png'" mode="" class="hb-hd-content-head-user-logo"></image>
-							<view v-if="isLogin" class="hb-hd-content-head-user-name">
+							<image :src="isLogin ? userInfo.avatarUrl : '/static/images/default-logo.png'" mode="" class="hb-hd-content-head-user-logo" @click="goUser"></image>
+							<view v-if="isLogin" class="hb-hd-content-head-user-name" @click="goUser">
 								{{userInfo.nickName}}
 							</view>
 							<view v-else class="hb-hd-content-head-user-name" @click="login">
@@ -25,7 +25,7 @@
 						</view>
 						<view class="hb-hd-content-head-money">
 							<template v-if="isLogin">
-								<view class="hb-hd-content-head-money-balance">
+								<view class="hb-hd-content-head-money-balance" @click="withDraw">
 									<view class="hb-hd-content-head-money-balance-do">￥</view>
 										<dash-countTo :startVal="oldVal" :endVal="newVal" :decimals='2' :duration='1000'></dash-countTo>
 									<view class="hb-hd-content-head-money-balance-wx">
@@ -256,6 +256,11 @@
 					url: "/pages/user/user"
 				})
 			},
+			withDraw(){
+				uni.navigateTo({
+					url: "/pages/withdraw/withdraw"
+				})
+			}
 		}
 	}
 </script>
