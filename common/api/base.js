@@ -30,7 +30,7 @@ export const test = (data) => {
 }
 
 //商品详情
-const login = (code, encryptedData, iv) => {
+const login = (code, encryptedData, iv, fromUid) => {
     return http.request({
         url: '/free/v1/user/login',
         method: 'POST', 
@@ -38,6 +38,7 @@ const login = (code, encryptedData, iv) => {
 			code,
 			encryptedData,
 			iv,
+			fromUid
 		},
     })
 }
@@ -81,7 +82,37 @@ const taskDo = (alias) => {
 		},
     })
 }
+//抽奖列表
+const lotteryList = () => {
+    return http.request({
+        url: '/free/v1/lottery/list',
+        method: 'GET', 
+        data: {
+			
+		},
+    })
+}
+//提现信息
+const withdrawInfo = () => {
+    return http.request({
+        url: '/free/v1/withdraw/info',
+        method: 'GET', 
+        data: {
+			
+		},
+    })
+}
+//提现信息
+const withdrawDo = (money) => {
+    return http.request({
+        url: '/free/v1/withdraw/do',
+        method: 'POST', 
+        data: {
+			money
+		},
+    })
+}
 // 默认全部导出  import api from '@/common/vmeitime-http/'
 export default {
-	login, userInfo, taskList, lotteryDo, taskDo
+	login, userInfo, taskList, lotteryDo, taskDo, lotteryList, withdrawInfo, withdrawDo
 }

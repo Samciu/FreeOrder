@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="position-relative">
-			<image src="https://trade-marketing-prod-oss.pin-dao.cn/product/1600411703659.png" class="bg"></image>
+			<image src="http://cdn.letwind.com/zy/free/user-bg.png" class="bg"></image>
 			<button type="default" size="mini" class="hym-btn" @click="memberCode">
 				<image src="/static/images/mine/hym.png"></image>
 				<text>会员码</text>
@@ -87,7 +87,7 @@
 		<view class="service-box">
 			<view class="font-size-lg text-color-base font-weight-bold" style="margin-bottom: 20rpx;">我的服务</view>
 			<view class="row">
-				<view class="grid" @click="attendance">
+				<!-- <view class="grid" @click="attendance">
 					<view class="image">
 						<image src="/static/images/mine/jfqd.png"></image>
 					</view>
@@ -98,14 +98,14 @@
 						<image src="/static/images/mine/nxsc.png"></image>
 					</view>
 					<view>积分商城</view>
-				</view>
+				</view> -->
 				<button open-type="contact" class="grid button" plain>
 					<view class="image">
 						<image src="/static/images/mine/lxkf.png"></image>
 					</view>
 					<view>联系客服</view>
 				</button>
-				<view class="grid" @click="orders">
+				<!-- <view class="grid" @click="orders">
 					<view class="image">
 						<image src="/static/images/mine/wddd.png"></image>
 					</view>
@@ -116,15 +116,16 @@
 						<image src="/static/images/mine/gdfw.png"></image>
 					</view>
 					<view>更多服务</view>
-				</view>
+				</view> -->
 			</view>
 		</view>
 		<!-- service box end -->
 		<!-- tips begin -->
 		<view class="d-flex just-content-center align-items-center text-color-assist" style="padding: 30rpx 0; font-size: 22rpx;">
-			积分好物 - 玩转积分兑换好物
+			领券点外卖，抽免单开现金福袋
 		</view>
 		<!-- tisps end -->
+		<login v-if="!isLogin && loginShow" @close="loginClose"></login>
 	</view>
 </template>
 
@@ -134,6 +135,7 @@
 		data() {
 			return {
 				newIcon: 'https://img-shop.qmimg.cn/s16/images/2020/05/12/ffb0613dded704b6.png',
+				loginShow: false,
 			}
 		},
 		computed: {
@@ -152,9 +154,10 @@
 		},
 		methods: {
 			login() {
-				uni.navigateTo({
-					url: '/pages/login/login'
-				})
+				this.loginShow = true
+			},
+			loginClose() {
+				this.loginShow = false
 			},
 			packages() {
 				if(!this.isLogin) {

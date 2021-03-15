@@ -1,7 +1,7 @@
 <template>
 	<view class="wrapper">
 		<view class="head">
-			<image src="/static/images/task.png" mode="" class="head-bg"></image>
+			<image src="http://cdn.letwind.com/zy/free/task.png" mode="" class="head-bg"></image>
 		</view>
 		<view class="task">
 			<view class="task-item" v-for="(item, index) in task" :key="index">
@@ -24,7 +24,7 @@
 					<button plain class="task-item-list-btn" open-type="share" v-if="taskItem.alias == 'invite'">
 						{{taskItem.btn}}
 					</button>
-					<view class="task-item-list-btn" @click="doTask(index, i)" v-else>
+					<view :class="['task-item-list-btn', (taskItem.alias == 'sign' && taskItem.hasSign == true) ?'hasSign': '']" @click="doTask(index, i)" v-else>
 						{{taskItem.btn}}
 						<!-- <view class="task-item-list-btn-idot"></view> -->
 					</view>
@@ -186,6 +186,10 @@
 					position: relative;
 					box-shadow: 0 12rpx 24rpx #c5c5c5;
 					font-size: 28rpx;
+					&.hasSign{
+						background: #9b9a9d;
+						color: #FFFFFF;
+					}
 					&-idot{
 						position: absolute;
 						right: 0;

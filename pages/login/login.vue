@@ -62,7 +62,7 @@ export default {
 						uni.getUserInfo({
 							withCredentials: true,
 							success: ress => {
-								this.$api.login(res.code, ress.encryptedData, ress.iv).then((res)=>{
+								this.$api.login(res.code, ress.encryptedData, ress.iv, this.$store.state.fromUid).then((res)=>{
 									this.$store.commit('SET_TOKEN', res.data.token)
 									this.$store.commit('SET_USERINFO', res.data.user)
 									uni.navigateBack();

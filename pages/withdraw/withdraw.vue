@@ -21,12 +21,12 @@
 				<view class="list-head-title">
 					选择提现金额
 				</view>
-				<view class="list-head-detail">
+				<!-- <view class="list-head-detail">
 					提现记录
 					<view class="iconfont iconiconfontjiantou2">
 						
 					</view>
-				</view>
+				</view> -->
 			</view>
 			<view class="list-items">
 				<view :class="['list-items-item', index == itemIndex ? 'active' : '']" v-for="(item, index) in list" :key="index" @click="choose(index)">
@@ -49,6 +49,9 @@
 					<image src="/static/images/withdraw-choose.png" mode="" class="list-type-wx-choose"></image>
 				</view>
 			</view>
+			<view class="list-btn" @click="withdrawDo">
+				申请提现
+			</view>
 		</view>
 		<view class="tips">
 			<view class="tips-head">
@@ -70,22 +73,49 @@
 	export default {
 		data() {
 			return {
-				list: [0.3, 1, 5, 10, 30, 50, 100],
+				list: [],
 				itemIndex: 0,
-				tips: [
-					'提现到微信零钱，预计三个工作日内到账',
-					'提现失败后，系统会在24小时内返还到原账户',
-					'每个用户每天可提现一次',
-				],
+				tips: [],
 			};
 		},
 		computed: {
 			...mapState(['userInfo', 'balance']),
 		},
+		onLoad() {
+			this.getWithdrawInfo()
+		},
 		methods: {
 			choose(index){
 				this.itemIndex = index
-			}
+			},
+			getWithdrawInfo(){
+				this.$api.withdrawInfo().then((res)=>{
+					this.list = res.data.list
+					this.tips = res.data.tips
+				}).catch((err)=>{
+					uni.showToast({
+						icon: 'none',
+					    title: err.msg,
+					    duration: 2000
+					});
+				})
+			},
+			withdrawDo(){
+				this.$api.withdrawDo(this.list[this.itemIndex]).then((res)=>{
+					this.$store.commit('SET_BALANCE', res.data.balance);
+					uni.showToast({
+						icon: 'none',
+					    title: res.msg,
+					    duration: 2000
+					});
+				}).catch((err)=>{
+					uni.showToast({
+						icon: 'none',
+					    title: err.msg,
+					    duration: 2000
+					});
+				})
+			},
 		}
 	}
 </script>
@@ -205,6 +235,15 @@
 				}
 			}
 		}
+		&-btn{
+			background: linear-gradient( 90deg ,#4e62fb, #7b89f5);;
+			height: 80rpx;
+			line-height: 80rpx;
+			border-radius: 80rpx;
+			margin-top: 60rpx;
+			text-align: center;
+			color: #FFFFFF;
+		}
 	}
 	.tips{
 		background-color: #FFFFFF;
@@ -218,7 +257,7 @@
 		&-items{
 			color: #9e9e9e;
 			&-item{
-				
+				font-size: 30rpx;
 			}
 		}
 	}

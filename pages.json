@@ -3,7 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "抽免单·领福袋"
+				"navigationBarTitleText": "开福袋·抽免单"
 				
 			}
 		}
@@ -15,17 +15,6 @@
 				"navigationBarTextStyle": "white",
 				"navigationBarBackgroundColor": "#4e62fb",
 				"backgroundColor": "#4e62fb"
-            }
-            
-        }
-        ,{
-            "path" : "pages/login/login",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "登录",
-                "navigationBarTextStyle": "black",
-                "navigationBarBackgroundColor": "#f8f8f8",
-                "backgroundColor": "#f8f8f8"
             }
             
         }

@@ -1,11 +1,14 @@
 <script>
 	import store from '@/store'
 	export default {
-		onLaunch: function() {
+		onLaunch: function(e) {
 			console.log('App Launch')
 			store.dispatch('getStore');
+			if(e.query.fromUid){
+				store.commit('SET_FROMUID', e.query.fromUid);
+			}
 		},
-		onShow: function() {
+		onShow: function(e) {
 			console.log('App Show')
 		},
 		onHide: function() {

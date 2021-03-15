@@ -10,6 +10,7 @@ const store = new Vuex.Store({
 		userInfo:{},
 		lotteryNum: 0,
 		balance: 0.00,
+		fromUid: '', //邀请人uid
 	},
 	getters: {
 		//是否登录
@@ -31,6 +32,9 @@ const store = new Vuex.Store({
 		},
 		SET_BALANCE(state, balance){
 			state.balance = balance
+		},
+		SET_FROMUID(state, fromUid){
+			state.fromUid = fromUid
 		},
 	},
 	actions: {

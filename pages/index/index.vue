@@ -27,14 +27,14 @@
 							<template v-if="isLogin">
 								<view class="hb-hd-content-head-money-balance" @click="withDraw">
 									<view class="hb-hd-content-head-money-balance-do">￥</view>
-										<dash-countTo :startVal="oldVal" :endVal="newVal" :decimals='2' :duration='1000'></dash-countTo>
+										<dash-countTo :startVal="oldVal" :endVal="newVal" :decimals='2' :duration='1500'></dash-countTo>
 									<view class="hb-hd-content-head-money-balance-wx">
 										可提现
 									</view>
 								</view>
 							</template>
-							<template v-else @click="login">
-								<view class="hb-hd-content-head-money-balance">
+							<template v-else>
+								<view class="hb-hd-content-head-money-balance" @click="login">
 									****
 									<view class="hb-hd-content-head-money-balance-wx">
 										可提现
@@ -53,11 +53,11 @@
 				<view class="hb-bd-turn">
 					<view class="hb-bd-turn-content" :animation="animationData">
 						<view class="hb-bd-turn-content-block">
-							<view :class="['hb-bd-turn-content-block-item', 'item'+index]" v-for="(item, index) in turnList" :key="index">
+							<view :class="['hb-bd-turn-content-block-item', 'item'+index]" v-for="(item, index) in lotteryList" :key="index">
 								<view class="hb-bd-turn-content-block-item-name">
 									{{item.name}}
 								</view>
-								<image :src="item.img" mode="" class="hb-bd-turn-content-block-item-img"></image>
+								<image :src="item.cover" mode="" class="hb-bd-turn-content-block-item-img"></image>
 							</view>
 						</view>
 					</view>
@@ -75,6 +75,7 @@
 		<view class="lotteryModal" @touchmove.stop="handle" @click="closeLotteryModal" v-if="lotteryModalShow">
 			<view class="lotteryModal-content animate__animated animate__zoomIn" @click.stop="handle">
 				<view class="lotteryModal-content-body">
+					<image src="https://funimg.pddpic.com/mobile_piggy/cash_back_three_choose_adv_img_10.png.slim.png" mode="" class="lotteryModal-content-body-bg"></image>
 					<view class="lotteryModal-content-body-title">
 						恭喜您中奖了
 					</view>
@@ -84,7 +85,7 @@
 						<image src="https://images.pinduoduo.com/market-lottie/2021-01-31/973e52c3-442b-46a8-8ff4-98993373d543_suffix.png" mode="" class="lotteryModal-content-body-bd-bg3" @click="openHongbao"></image>
 						<view class="lotteryModal-content-body-bd-title" v-show="!hongbaoMoneyShow">
 							<view class="lotteryModal-content-body-bd-title-name">
-								免单福利
+								外卖免单宝
 							</view>
 							<view class="lotteryModal-content-body-bd-title-desc">
 								发了一个现金福袋
@@ -99,11 +100,11 @@
 							</view>
 						</view>
 					</view>
-					<button plain class="lotteryModal-content-body-question" open-type="contact">有疑问？</button>
 				</view>
 				<image src="/static/images/close.png" mode="" class="lotteryModal-content-cancel" @click.stop="closeLotteryModal"></image>
 			</view>
 		</view>
+		<login v-if="loginShow" @close="loginClose"></login>
 	</view>
 </template>
 
@@ -116,38 +117,14 @@
 					'小疯子刚刚抽到了免单',
 					'长安菇凉刚刚抽到了现金大福袋',
 				],
-				turnList: [
-					{
-						'name': '免单霸王餐',
-						'img': 'https://funimg-2.pddpic.com/spi_main/icon_redpack.png.slim.png?imageView2/2/w/1300/q/80',
-					},
-					{
-						'name': '现金小福袋',
-						'img': 'https://funimg-2.pddpic.com/spi_main/icon_redpack.png.slim.png?imageView2/2/w/1300/q/80',
-					},
-					{
-						'name': '再来一次',
-						'img': 'https://funimg-2.pddpic.com/spi_main/icon_redpack.png.slim.png?imageView2/2/w/1300/q/80',
-					},
-					{
-						'name': '现金大福袋',
-						'img': 'https://funimg-2.pddpic.com/spi_main/icon_redpack.png.slim.png?imageView2/2/w/1300/q/80',
-					},
-					{
-						'name': '谢谢参与',
-						'img': 'https://funimg-2.pddpic.com/spi_main/icon_redpack.png.slim.png?imageView2/2/w/1300/q/80',
-					},
-					{
-						'name': '现金中福袋',
-						'img': 'https://funimg-2.pddpic.com/spi_main/icon_redpack.png.slim.png?imageView2/2/w/1300/q/80',
-					},
-				],
+				lotteryList: [],
 				animationData: {},
 				lotteryModalShow: false,
 				hongbaoMoneyShow: false,
-				oldVal: 0,
-				newVal: 0,
+				oldVal: 0.00,
+				newVal: 0.00,
 				award: {},
+				loginShow: false,
 			}
 		},
 		computed: {
@@ -159,12 +136,14 @@
 				this.oldVal = oldVal
 				this.newVal = newVal
 		    },
+			deep:true
 		},
 		onLoad() {
-			
+			this.getLotteryList()
 		},
 		onShow(){
 		    this.$store.dispatch('getUserInfo');
+			this.newVal = this.balance
 		},
 		onShareAppMessage(res) {
 			return getApp().shareConfig()
@@ -175,9 +154,10 @@
 				return
 			},
 			login() {
-				uni.navigateTo({
-					url: '/pages/login/login'
-				})
+				this.loginShow = true
+			},
+			loginClose() {
+				this.loginShow = false
 			},
 			slowTunr(){
 				setInterval(() => {
@@ -208,30 +188,42 @@
 				})
 			},
 			lotteryDo(){
+				if(this.lotteryNum < 1){
+					uni.showToast({
+						icon: 'none',
+					    title: '抽奖剩余次数不足',
+					    duration: 2000
+					});
+					return
+				}
 				this.$api.lotteryDo().then((res)=>{
+					this.$store.commit('SET_LOTTERYNUM', this.lotteryNum - 1);
 					this.award = res.data.award
 					var animation = uni.createAnimation({
-						duration: 3000,
+						duration: 6000,
 					    timingFunction: 'ease',
 					})
-					let lotteryNum = 1
-					let lotteryRotateMin = -30 * lotteryNum - 5
-					let lotteryRotateMax = -90 * lotteryNum + 5
-					let rotate =  360 * 3 + Math.floor(Math.random()*(lotteryRotateMax - lotteryRotateMin + 1) + lotteryRotateMin);
+					let lotteryNum = res.data.award.index
+					let lotteryRotateMin = -60 * lotteryNum - 25
+					let lotteryRotateMax = -60 * lotteryNum + 25
+					let rotate =  360 * 6 + Math.floor(Math.random()*(lotteryRotateMax - lotteryRotateMin + 1) + lotteryRotateMin);
 					animation.rotate(rotate).step()
 					this.animationData = animation.export()
-					uni.vibrateShort({
-					    
-					});
+					const innerAudioContextLottery = uni.createInnerAudioContext();
+					innerAudioContextLottery.autoplay = true;
+					innerAudioContextLottery.src = 'https://pic.ibaotu.com/18/00/49/92s888piCTt8.mp3';
 					setTimeout(() => {
-						const innerAudioContext = uni.createInnerAudioContext();
-						innerAudioContext.autoplay = true;
-						innerAudioContext.src = 'https://funimg.pddpic.com/spi_main/money.mp3';
-						
+						// const innerAudioContext = uni.createInnerAudioContext();
+						// innerAudioContext.autoplay = true;
+						// innerAudioContext.src = 'https://funimg.pddpic.com/spi_main/money.mp3';
+						innerAudioContextLottery.stop()
+						uni.vibrateShort({
+						    
+						});
 						this.openLotteryModal()
 						animation.rotate(0).step({duration: 0})
 						this.animationData = animation.export()
-					}, 3500)
+					}, 6500)
 				}).catch((err)=>{
 					uni.showToast({
 						icon: 'none',
@@ -259,6 +251,17 @@
 			withDraw(){
 				uni.navigateTo({
 					url: "/pages/withdraw/withdraw"
+				})
+			},
+			getLotteryList(){
+				this.$api.lotteryList().then((res)=>{
+					this.lotteryList = res.data
+				}).catch((err)=>{
+					uni.showToast({
+						icon: 'none',
+					    title: err.msg,
+					    duration: 2000
+					});
 				})
 			}
 		}
@@ -525,7 +528,7 @@
 	.lotteryModal{
 		width: 100%;
 		height: 100%;
-		background-color: rgba(000, 000, 000, 0.9);
+		background-color: rgba(000, 000, 000, 1);
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -537,8 +540,17 @@
 			&-body{
 				width: 600rpx;
 				padding: 40rpx 0;
-				background-color: #DB5C4E;
+				// background-color: #DB5C4E;
 				border-radius: 8px;
+				position: relative;
+				&-bg{
+					position: absolute;
+					position: absolute;
+					top: -100rpx;
+					left: -100rpx;
+					width: 800rpx;
+					height: 800rpx;
+				}
 				&-title{
 					font-size: 42rpx;
 					color: #FBECCB;
