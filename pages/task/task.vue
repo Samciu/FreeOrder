@@ -51,6 +51,9 @@
 			let shareConfig = getApp().shareConfig()
 			return shareConfig
 		},
+		onShareTimeline(){
+			return getApp().shareConfig('timeline')
+		},
 		methods: {
 			getTask(){
 				this.$api.taskList().then((res)=>{

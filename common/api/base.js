@@ -112,7 +112,17 @@ const withdrawDo = (money) => {
 		},
     })
 }
+//分享配置
+const shareConfig = (path) => {
+    return http.request({
+        url: '/free/v1/config/share',
+        method: 'GET', 
+        data: {
+			path
+		},
+    })
+}
 // 默认全部导出  import api from '@/common/vmeitime-http/'
 export default {
-	login, userInfo, taskList, lotteryDo, taskDo, lotteryList, withdrawInfo, withdrawDo
+	login, userInfo, taskList, lotteryDo, taskDo, lotteryList, withdrawInfo, withdrawDo, shareConfig
 }

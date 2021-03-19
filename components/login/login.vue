@@ -2,7 +2,7 @@
 	<view class="container" @click="closeModal" @touchmove.stop="handle">
 		<view class="content animate__animated animate__fadeInUp" @click.stop="handle">
 			<view class="content-intro">
-				<image src="http://cdn.letwind.com/zy/free/logo.png"></image>
+				<image src="http://cdn.letwind.com/zy/free/logo.png" class="content-intro-img"></image>
 				<view class="content-intro-tips">
 					外卖免单宝
 					<br />
@@ -11,7 +11,7 @@
 			</view>
 			<view class="content-bottom">
 				<button type="primary" size="default" class="content-bottom-btn" open-type="getUserInfo" lang="zh_CN" @getuserinfo="getUserInfo">
-					<image src="/static/images/mine/wechat.png"></image>
+					<image src="/static/images/mine/wechat.png" class="content-bottom-btn-img"></image>
 					微信一键登录
 				</button>
 			</view>
@@ -94,7 +94,7 @@ export default {
 			justify-content: space-evenly;
 			font-size: 30rpx;
 			color: #666666;
-			image {
+			&-img {
 				margin-top: 30rpx;
 				width: 140rpx;
 				height: 140rpx;
@@ -120,7 +120,7 @@ export default {
 				justify-content: center;
 				padding: 10rpx 0;
 
-				image {
+				&-img {
 					width: 36rpx;
 					height: 30rpx;
 					margin-right: 10rpx;

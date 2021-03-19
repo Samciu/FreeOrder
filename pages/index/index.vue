@@ -125,6 +125,7 @@
 				newVal: 0.00,
 				award: {},
 				loginShow: false,
+				ShareConfig: {},
 			}
 		},
 		computed: {
@@ -140,16 +141,19 @@
 		},
 		onLoad() {
 			this.getLotteryList()
+			this.getShareConfig()
 		},
 		onShow(){
 		    this.$store.dispatch('getUserInfo');
 			this.newVal = this.balance
 		},
 		onShareAppMessage(res) {
-			return getApp().shareConfig()
+			return this.shareConfig
+		},
+		onShareTimeline(){
+			return getApp().shareConfig('timeline')
 		},
 		methods: {
-			...mapMutations(['SET_BALANCE']),
 			handle(){
 				return
 			},
@@ -256,6 +260,20 @@
 			getLotteryList(){
 				this.$api.lotteryList().then((res)=>{
 					this.lotteryList = res.data
+				}).catch((err)=>{
+					uni.showToast({
+						icon: 'none',
+					    title: err.msg,
+					    duration: 2000
+					});
+				})
+			},
+			getShareConfig(){
+				this.shareConfig = getApp().shareConfig()
+				var pages = getCurrentPages();
+				var route = pages[pages.length - 1].route;
+				this.$api.shareConfig(route).then((res)=>{
+					this.shareConfig = res.data
 				}).catch((err)=>{
 					uni.showToast({
 						icon: 'none',
