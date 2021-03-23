@@ -24,8 +24,8 @@
             {
                 "navigationBarTitleText": "",
 				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#bae1b5",
-				"backgroundColor": "#bae1b5"
+				"navigationBarBackgroundColor": "#cf565a",
+				"backgroundColor": "#cf565a"
             }
             
         }
@@ -51,6 +51,25 @@
             
         }
     ],
+	"tabBar": {
+		"backgroundColor": "#F7F7FA",
+		"color": "#707070",
+		"selectedColor": "#EA584B",
+		"borderStyle": "white",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"text": "抽免单",
+				"iconPath": "/static/tabbar/index.png",
+				"selectedIconPath": "/static/tabbar/index_fill.png"
+			},
+			{
+				"pagePath": "pages/user/user",
+				"text": "我的",
+				"iconPath": "/static/tabbar/user.png",
+				"selectedIconPath": "/static/tabbar/user_fill.png"
+			}
+		]
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "免单福利",

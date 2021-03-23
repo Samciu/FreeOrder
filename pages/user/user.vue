@@ -1,7 +1,8 @@
 <template>
 	<view class="wrapper">
-		
-		
+		<view class="head">
+			
+		</view>
 	</view>
 </template>
 
@@ -137,5 +138,8 @@
 	page {
 		background-color: #f8f8f8;
 	}
-
+	.head{
+		height: 500rpx;
+		background: linear-gradient( 180deg, #cf565a, #d72128 100% );;
+	}
 </style>
