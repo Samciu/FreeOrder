@@ -8,21 +8,6 @@
 			<view class="hb-hd">
 				<view class="hb-hd-content">
 					<view class="hb-hd-content-head">
-						<view class="hb-hd-content-head-user">
-							<image :src="isLogin ? userInfo.avatarUrl : '/static/images/default-logo.png'" mode="" class="hb-hd-content-head-user-logo" @click="goUser"></image>
-							<view v-if="isLogin" class="hb-hd-content-head-user-name" @click="goUser">
-								{{userInfo.nickName}}
-							</view>
-							<view v-else class="hb-hd-content-head-user-name" @click="login">
-								请点击授权登录
-							</view>
-							<view class="hb-hd-content-head-user-center" @click="goUser">
-								<view class="hb-hd-content-head-user-center-text">
-									个人中心
-								</view>
-								<view class="iconfont iconiconfontjiantou2"></view>
-							</view>
-						</view>
 						<view class="hb-hd-content-head-money">
 							<template v-if="isLogin">
 								<view class="hb-hd-content-head-money-balance" @click="withDraw">
@@ -326,41 +311,7 @@
 				height: 100%;
 				&-head{
 					width: 100%;
-					height: 340rpx;
-					&-user{
-						display: flex;
-						align-items: center;
-						padding-top: 10rpx;
-						&-logo{
-							width: 80rpx;
-							height: 80rpx;
-							border-radius: 60rpx;
-							margin-right: 10rpx;
-							margin-left: 20rpx;
-							flex-shrink: 0;
-						}
-						&-name{
-							font-size: 30rpx;
-							color: #b9562d;
-						}
-						&-center{
-							flex-shrink: 0;
-							margin-left: auto;
-							background: #fda673;
-							color: #fff;
-							font-size: 26rpx;
-							height: 50rpx;
-							display: flex;
-							align-items: center;
-							border-radius: 50rpx 0 0 50rpx;
-							padding-left: 20rpx;
-							font-weight: 500;
-							.iconiconfontjiantou2{
-								font-size: 26rpx;
-								padding: 0 4rpx;
-							}
-						}
-					}
+					height: 220rpx;
 					&-money{
 						text-align: center;
 						font-size: 60rpx;

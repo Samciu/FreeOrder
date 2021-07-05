@@ -1,6 +1,22 @@
 <template>
 	<view class="wrapper">
 		<view class="head">
+			<template v-if="isLogin">
+				<view class="head-user">
+					<image :src="userInfo.avatarUrl" mode="" class="head-user-avatar"></image>
+					<view class="head-user-nickname">
+						{{userInfo.nickName}}
+					</view>
+				</view>
+			</template>
+			<template v-else>
+				<view class="head-login">
+					<image src="/static/images/wx.png" mode="" class="head-login-wx"></image>
+					授权登录
+				</view>
+			</template>
+		</view>
+		<view class="item first">
 			
 		</view>
 	</view>
@@ -11,17 +27,12 @@
 	export default {
 		data() {
 			return {
-				newIcon: 'https://img-shop.qmimg.cn/s16/images/2020/05/12/ffb0613dded704b6.png',
 				loginShow: false,
 			}
 		},
 		computed: {
 			...mapGetters(['isLogin']),
 			...mapState(['userInfo', 'lotteryNum', 'balance']),
-			growthValue() {
-				if(!this.isLogin) return 0
-				return 12
-			}
 		},
 		onLoad() {
 			
@@ -42,94 +53,7 @@
 			loginClose() {
 				this.loginShow = false
 			},
-			packages() {
-				if(!this.isLogin) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/packages/index'
-				})
-			},
-			addresses() {
-				if(!this.isLogin) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/address/address'
-				})
-			},
-			integrals() {
-				if(!this.isLogin) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/integrals/integrals'
-				})
-			},
-			attendance() {
-				if(!this.isLogin) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/attendance/attendance'
-				})
-			},
-			orders() {
-				// if(!this.isLogin) {
-				// 	this.login()
-				// 	return
-				// }
-				uni.navigateTo({
-					url: '/pages/order/order'
-				})
-			},
-			memberCode() {
-				this.no()
-			},
-			coupons() {
-				if(!this.isLogin) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/coupons/coupons'
-				})
-			},
-			userinfo() {
-				if(!this.isLogin) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/mine/userinfo'
-				})
-			},
-			services() {
-				let url = 'https://baidu.com'
-				uni.navigateTo({
-					url: '/pages/webview/webview?url=' + url
-				});
-			},
-			giftCards() {
-				if(!this.isLogin) {
-					this.login()
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/giftcard/giftcard'
-				})
-			},
-			no(){
-				uni.showToast({
-					icon: 'none',
-				    title: '暂未开放',
-				    duration: 2000
-				});
-			}
+			
 		}
 	}
 </script>
@@ -139,7 +63,48 @@
 		background-color: #f8f8f8;
 	}
 	.head{
-		height: 500rpx;
-		background: linear-gradient( 180deg, #cf565a, #d72128 100% );;
+		height: 400rpx;
+		background: linear-gradient( 180deg, #cf565a, #d72128 100% );
+		display: flex;
+		justify-content: center;
+		&-login{
+			padding: 0 30rpx;
+			height: 80rpx;
+			display: flex;
+			align-items: center;
+			background-color: #4CD964;
+			border-radius: 80rpx;
+			color: #FFFFFF;
+			&-wx{
+				width: 30rpx;
+				height: 30rpx;
+				margin-right: 20rpx;
+			}
+		}
+		&-user{
+			text-align: center;
+			margin-top: 60rpx;
+			&-avatar{
+				width: 130rpx;
+				height: 130rpx;
+				border-radius: 100%;
+				display: block;
+			}
+			&-nickname{
+				font-size: 34rpx;
+				color: #FFFFFF;
+				margin-top: 10rpx;
+			}
+		}
+	}
+	.item{
+		width: 690rpx;
+		height: 200rpx;
+		margin: auto;
+		background-color: #FFFFFF;
+		border-radius: 10rpx;
+		&.first{
+			margin-top: -100rpx;
+		}
 	}
 </style>

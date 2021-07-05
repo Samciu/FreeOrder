@@ -11,7 +11,7 @@
 			</view>
 			<view class="content-bottom">
 				<button type="primary" size="default" class="content-bottom-btn" open-type="getUserInfo" lang="zh_CN" @getuserinfo="getUserInfo">
-					<image src="/static/images/mine/wechat.png" class="content-bottom-btn-img"></image>
+					<image src="/static/images/wx.png" class="content-bottom-btn-img"></image>
 					微信一键登录
 				</button>
 			</view>
