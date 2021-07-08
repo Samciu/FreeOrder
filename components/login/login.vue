@@ -10,7 +10,7 @@
 				</view>
 			</view>
 			<view class="content-bottom">
-				<button type="primary" size="default" class="content-bottom-btn" open-type="getUserInfo" lang="zh_CN" @getuserinfo="getUserInfo">
+				<button type="primary" size="default" class="content-bottom-btn"  lang="zh_CN" @click="getUserProfile">
 					<image src="/static/images/mine/wechat.png" class="content-bottom-btn-img"></image>
 					微信一键登录
 				</button>
@@ -62,6 +62,28 @@ export default {
 				});
 				
 			}
+		},
+		async getUserProfile() {
+			const [userProfile, login] = await Promise.all([
+				uni.getUserProfile({
+				desc: "用于完善会员资料",
+				}),
+				uni.login(),
+			]);
+			const [userProfileErr, userProfileRes] = userProfile;
+			if (userProfileErr) return;
+			const [loginErr, loginRes] = login;
+			this.$api.login(loginRes.code, userProfileRes.encryptedData, userProfileRes.iv, this.$store.state.fromUid).then((res)=>{
+				this.$store.commit('SET_TOKEN', res.data.token)
+				this.$store.commit('SET_USERINFO', res.data.user)
+				this.$emit('close')
+			}).catch((err)=>{
+				uni.showToast({
+					icon: 'none',
+					title: err.msg,
+					duration: 2000
+				});
+			})
 		}
 	}
 };
