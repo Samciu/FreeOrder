@@ -65,6 +65,15 @@
 				</view>
 			</view>
 		</view>
+		<pay-user-info
+			:show="show"
+			:titleText="titleText"
+			:cancelText="cancelText"
+			:buttonText="buttonText"
+			@loginSuccess="loginSuccess"
+			@loginFail="loginFail"
+			@loginCancel="loginCancel"
+		></pay-user-info>
 	</view>
 </template>
 
@@ -76,6 +85,10 @@
 				list: [],
 				itemIndex: 0,
 				tips: [],
+				show: false,
+      			titleText: "首次提现需进行帐号安全验证",
+				buttonText: "确定",
+				cancelText: "取消",
 			};
 		},
 		computed: {
@@ -109,12 +122,49 @@
 					    duration: 2000
 					});
 				}).catch((err)=>{
+
+					if (err.code == 401) {
+						return this.show = true;
+					}
+
 					uni.showToast({
 						icon: 'none',
 					    title: err.msg,
 					    duration: 2000
 					});
 				})
+			},
+			async loginSuccess(res) {
+
+				console.log(res.detail[0])
+
+				this.show = false;
+				const data = await this.$api.fetchPayToolUserLogin({ code: res.detail[0].detail.code });
+
+				console.log(data)
+
+				if (data.code == 200) {
+					uni.showToast({
+						title: "登陆校验成功",
+						duration: 2000,
+					});
+				}
+
+				if (data.msg) {
+					uni.showToast({
+						icon: "none",
+						title: res.msg,
+						duration: 2000,
+					});
+				}
+			},
+
+			loginFail(res) {
+				console.log("loginFail", res);
+			},
+
+			loginCancel() {
+				this.show = false;
 			},
 		}
 	}

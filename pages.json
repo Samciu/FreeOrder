@@ -46,7 +46,12 @@
                 "enablePullDownRefresh": false,
 				"navigationBarTextStyle": "white",
 				"navigationBarBackgroundColor": "#4e62fb",
-				"backgroundColor": "#f8f8f8"
+				"backgroundColor": "#f8f8f8",
+				"mp-weixin": {
+					"usingComponents": {
+						"pay-user-info": "plugin://myPlugin/pay-user-info"
+					}
+				}
             }
             
         }

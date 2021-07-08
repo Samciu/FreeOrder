@@ -122,7 +122,17 @@ const shareConfig = (path) => {
 		},
     })
 }
+
+// 绑定插件code
+const fetchPayToolUserLogin = data => {
+    return http.request({
+        url: '/addon/plug/payTool/free/user/login',
+        method: 'GET', 
+        data
+    })
+}
+
 // 默认全部导出  import api from '@/common/vmeitime-http/'
 export default {
-	login, userInfo, taskList, lotteryDo, taskDo, lotteryList, withdrawInfo, withdrawDo, shareConfig
+	login, userInfo, taskList, lotteryDo, taskDo, lotteryList, withdrawInfo, withdrawDo, shareConfig, fetchPayToolUserLogin
 }

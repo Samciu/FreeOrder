@@ -72,6 +72,7 @@
 				</view>
 			</view>
 		</view>
+		<view class="copyright"></view>
 		<view class="lotteryModal" @touchmove.stop="handle" @click="closeLotteryModal" v-if="lotteryModalShow">
 			<view class="lotteryModal-content animate__animated animate__zoomIn" @click.stop="handle">
 				<view class="lotteryModal-content-body">
@@ -542,6 +543,9 @@
 				}
 			}
 		}
+	}
+	.copyright{
+		height: 30rpx;
 	}
 	.lotteryModal{
 		width: 100%;

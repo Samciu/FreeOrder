@@ -42,6 +42,6 @@
 
 <style>
 	/*每个页面公共css */
-	@import 'animate.css';
+	/* @import 'animate.css'; */
 	@import './static/iconfont/iconfont.scss';
 </style>
