@@ -24,6 +24,9 @@
 					<button plain class="task-item-list-btn" open-type="share" v-if="taskItem.alias == 'invite'">
 						{{taskItem.btn}}
 					</button>
+					<view class="task-item-list-btn" v-else-if="taskItem.alias == 'ad-video'" @click="doVideo(taskItem)">
+						{{taskItem.btn}}
+					</view>
 					<view :class="['task-item-list-btn', (taskItem.alias == 'sign' && taskItem.hasSign == true) ?'hasSign': '']" @click="doTask(index, i)" v-else>
 						{{taskItem.btn}}
 						<!-- <view class="task-item-list-btn-idot"></view> -->
@@ -36,6 +39,9 @@
 </template>
 
 <script>
+	// 在页面中定义激励视频广告
+	let videoAd = null
+
 	export default {
 		data() {
 			return {
@@ -66,6 +72,47 @@
 					});
 				})
 			},
+			createRewardedVideoAd(tashDetail) {
+				const adId = tashDetail.adId
+				videoAd = wx.createRewardedVideoAd({
+					adUnitId: adId
+				})
+				videoAd.onLoad(() => {})
+				videoAd.onError((err) => {
+					console.log('onError',err)
+				})
+				videoAd.onClose((res) => {
+					if (res && res.isEnded) {
+						console.log("正常播放结束，可以下发游戏奖励");
+						this.fetchTaskDo(tashDetail)
+					} else {
+						uni.showToast({
+							title: "还没看完这个视频哦",
+							icon: "none",
+							duration: 2000,
+						});
+					}
+				})
+			},
+			doVideo(tashDetail) {
+				if (!wx.createRewardedVideoAd) return;
+				if (!videoAd) {
+					this.createRewardedVideoAd(tashDetail)
+				}
+				videoAd.show().catch(() => {
+					// 失败重试
+					videoAd.load()
+					.then(() => videoAd.show())
+					.catch(err => {
+						console.log('激励视频 广告显示失败')
+						uni.showToast({
+							title: "激励视频 广告显示失败",
+							icon: "none",
+							duration: 2000,
+						});
+					})
+				})
+			},
 			doTask(index, i){
 				let tashDetail = this.task[index]['list'][i]
 				if(tashDetail.package){
@@ -82,6 +129,9 @@
 						this.tbAuthShow = true
 					}
 				}
+				this.fetchTaskDo(tashDetail)
+			},
+			fetchTaskDo(tashDetail) {
 				this.$api.taskDo(tashDetail.alias).then((res)=>{
 					if(res.msg){
 						uni.showToast({
