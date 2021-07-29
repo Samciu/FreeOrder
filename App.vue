@@ -36,7 +36,10 @@
 					return messages[Math.floor(Math.random()*messages.length)];
 				}
 			},
-		}
+		},
+		globalData: {  
+            config: __wxConfig
+        }
 	}
 </script>
 

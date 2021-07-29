@@ -73,12 +73,12 @@ const lotteryDo = () => {
     })
 }
 //做任务
-const taskDo = (alias) => {
+const taskDo = (alias,id) => {
     return http.request({
         url: '/free/v1/task/do',
         method: 'POST', 
         data: {
-			alias,
+			alias,id
 		},
     })
 }
@@ -132,7 +132,34 @@ const fetchPayToolUserLogin = data => {
     })
 }
 
+// 提现历史
+const fetchWithdrawRecord = data => {
+    return http.request({
+        url: '/free/v1/withdraw/record',
+        method: 'GET', 
+        data
+    })
+}
+
+// 提现历史
+const fetchConfigTips = data => {
+    return http.request({
+        url: '/free/v1/config/tips',
+        method: 'GET', 
+        data
+    })
+}
+
+// 提现历史
+const fetchConfigAd = data => {
+    return http.request({
+        url: '/free/v1/config/ad',
+        method: 'GET', 
+        data
+    })
+}
+
 // 默认全部导出  import api from '@/common/vmeitime-http/'
 export default {
-	login, userInfo, taskList, lotteryDo, taskDo, lotteryList, withdrawInfo, withdrawDo, shareConfig, fetchPayToolUserLogin
+	login, userInfo, taskList, lotteryDo, taskDo, lotteryList, withdrawInfo, withdrawDo, shareConfig, fetchPayToolUserLogin, fetchWithdrawRecord, fetchConfigTips, fetchConfigAd
 }

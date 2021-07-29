@@ -1,6 +1,7 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
+		
+        {
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "开福袋·抽免单"
@@ -54,6 +55,16 @@
 				}
             }
             
+        },
+
+        {
+            "path" : "pages/withdraw/history",
+            "style" :                                                                                    
+            {
+                "navigationBarBackgroundColor": "#4e62fb",
+                "navigationBarTitleText": "提现历史",
+                "enablePullDownRefresh": false
+            }
         }
     ],
 	"globalStyle": {

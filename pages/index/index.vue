@@ -1,6 +1,6 @@
 <template>
 	<view class="wrapper">
-		<view class="notice">
+		<view class="notice" v-if="tips.length">
 			<wyb-noticeBar :text="tips" type="vert" :show-more="false" class="notice-box" bgColor="#cf0013" color="#ffffff" width="300" v-if="tips.length > 0"/>
 		</view>
 		<view class="hb">
@@ -86,7 +86,7 @@
 						<image src="https://images.pinduoduo.com/market-lottie/2021-01-31/973e52c3-442b-46a8-8ff4-98993373d543_suffix.png" mode="" class="lotteryModal-content-body-bd-bg3" @click="openHongbao"></image>
 						<view class="lotteryModal-content-body-bd-title" v-show="!hongbaoMoneyShow">
 							<view class="lotteryModal-content-body-bd-title-name">
-								外卖免单宝
+								{{config.accountInfo.nickname}}
 							</view>
 							<view class="lotteryModal-content-body-bd-title-desc">
 								发了一个现金福袋
@@ -106,6 +106,10 @@
 			</view>
 		</view>
 		<login v-if="loginShow" @close="loginClose"></login>
+		<view class="ad">
+			<ad v-if="ad" :unit-id="ad.home_bottom" ad-type="video" ad-theme="white"></ad>
+		</view>
+		
 	</view>
 </template>
 
@@ -115,8 +119,6 @@
 		data() {
 			return {
 				tips: [
-					'小疯子刚刚抽到了免单',
-					'长安菇凉刚刚抽到了现金大福袋',
 				],
 				lotteryList: [],
 				animationData: {},
@@ -127,6 +129,8 @@
 				award: {},
 				loginShow: false,
 				ShareConfig: {},
+				ad: null,
+				config: getApp().globalData.config
 			}
 		},
 		computed: {
@@ -143,6 +147,8 @@
 		onLoad() {
 			this.getLotteryList()
 			this.getShareConfig()
+			this.fetchConfigTips()
+			this.fetchConfigAd()
 		},
 		onShow(){
 		    this.$store.dispatch('getUserInfo');
@@ -282,6 +288,16 @@
 					    duration: 2000
 					});
 				})
+			},
+			async fetchConfigTips() {
+				const res = await this.$api.fetchConfigTips()
+				console.log(res.data)
+				this.tips = res.data.map(item=>item.msg)
+			},
+			async fetchConfigAd() {
+				const res = await this.$api.fetchConfigAd()
+				console.log(res.data)
+				this.ad = res.data
 			}
 		}
 	}
@@ -673,5 +689,16 @@
 			opacity:1;
 			transform: scale(1);
 		}
+	}
+
+	.ad {
+		position: relative;
+		z-index: 1;
+		// width: 90%;
+		// margin: 0 auto;
+	}
+
+	.wrapper {
+		// padding-bottom: calc(env(safe-area-inset-bottom) + 50rpx);
 	}
 </style>

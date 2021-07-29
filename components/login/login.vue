@@ -2,9 +2,9 @@
 	<view class="container" @click="closeModal" @touchmove.stop="handle">
 		<view class="content animate__animated animate__fadeInUp" @click.stop="handle">
 			<view class="content-intro">
-				<image src="http://cdn.letwind.com/zy/free/logo.png" class="content-intro-img"></image>
+				<image :src="config.accountInfo.icon" class="content-intro-img"></image>
 				<view class="content-intro-tips">
-					外卖免单宝
+					{{config.accountInfo.nickname}}
 					<br />
 					领券点外卖，抽免单开现金福袋
 				</view>
@@ -26,7 +26,9 @@ import { mapMutations } from 'vuex';
 export default {
 	name:"login",
 	data() {
-		return {};
+		return {
+			config: getApp().globalData.config
+		};
 	},
 	methods: {
 		handle(){
@@ -77,6 +79,10 @@ export default {
 				this.$store.commit('SET_TOKEN', res.data.token)
 				this.$store.commit('SET_USERINFO', res.data.user)
 				this.$emit('close')
+				// 刷新页面
+				uni.reLaunch({
+					url: "/pages/index/index"
+				})
 			}).catch((err)=>{
 				uni.showToast({
 					icon: 'none',
@@ -92,6 +98,7 @@ export default {
 <style lang="scss">
 	.container{
 		position: fixed;
+		z-index: 99;
 		top: 0;
 		left: 0;
 		width: 100%;

@@ -21,13 +21,10 @@
 							{{taskItem.description}}
 						</view>
 					</view>
-					<button plain class="task-item-list-btn" open-type="share" v-if="taskItem.alias == 'invite'">
+					<button plain :class="['task-item-list-btn', taskItem.hasDo == true ?'hasSign': '']" open-type="share" v-if="taskItem.alias == 'invite'">
 						{{taskItem.btn}}
 					</button>
-					<view class="task-item-list-btn" v-else-if="taskItem.alias == 'ad-video'" @click="doVideo(taskItem)">
-						{{taskItem.btn}}
-					</view>
-					<view :class="['task-item-list-btn', (taskItem.alias == 'sign' && taskItem.hasSign == true) ?'hasSign': '']" @click="doTask(index, i)" v-else>
+					<view :class="['task-item-list-btn', taskItem.hasDo == true ?'hasSign': '']" @click="doTask(index, i)" v-else>
 						{{taskItem.btn}}
 						<!-- <view class="task-item-list-btn-idot"></view> -->
 					</view>
@@ -48,6 +45,7 @@
 				task: [],
 				tbAuthShow: false,
 				eleTask: {},
+				doTasking: false
 			};
 		},
 		onShow(){
@@ -73,7 +71,7 @@
 				})
 			},
 			createRewardedVideoAd(tashDetail) {
-				const adId = tashDetail.adId
+				const adId = tashDetail.package.adId
 				videoAd = wx.createRewardedVideoAd({
 					adUnitId: adId
 				})
@@ -115,6 +113,51 @@
 			},
 			doTask(index, i){
 				let tashDetail = this.task[index]['list'][i]
+
+				const { do_type, hasDo } = tashDetail
+
+				if (hasDo) {
+					uni.showToast({
+						title: "今天已完成，明天再来吧",
+						icon: "none",
+						duration: 2000,
+					});
+					return
+				}
+
+				if (do_type == "web") {
+					uni.navigateTo({
+						url: '/pages/webview/webview?url=' + tashDetail.package.url
+					});
+					this.fetchTaskDo(tashDetail)
+					return
+				}
+
+				if (do_type == "img") {
+					uni.previewImage({
+						urls: [tashDetail.package.img]
+					});
+					this.fetchTaskDo(tashDetail)
+					return
+				}
+
+				if (do_type == "minapp") {
+					uni.navigateToMiniProgram({
+						appId: tashDetail.package.minapp.appid,
+						path: tashDetail.package.minapp.path,
+						success(res) {
+							// 打开成功
+							this.fetchTaskDo(tashDetail)
+						}
+					})
+					return
+				}
+
+				if (do_type == "advideo") {
+					this.doVideo(tashDetail)
+					return
+				}
+
 				if(tashDetail.package){
 					if(tashDetail.package.minapp){
 						wx.navigateToMiniProgram({
@@ -132,7 +175,9 @@
 				this.fetchTaskDo(tashDetail)
 			},
 			fetchTaskDo(tashDetail) {
-				this.$api.taskDo(tashDetail.alias).then((res)=>{
+				if (this.doTasking) return;
+				this.doTasking = true
+				this.$api.taskDo(tashDetail.alias, tashDetail.id).then((res)=>{
 					if(res.msg){
 						uni.showToast({
 							icon: 'none',
@@ -140,12 +185,15 @@
 						    duration: 2000
 						});
 					}
+					this.doTasking = false
+					this.getTask()
 				}).catch((err)=>{
 					uni.showToast({
 						icon: 'none',
 					    title: err.msg,
 					    duration: 2000
 					});
+					this.doTasking = false
 				})
 			},
 			closeTbAuthModal(){

@@ -5,8 +5,8 @@
 				<view class="balance-head-title">
 					余额(元)
 				</view>
-				<view class="balance-head-detail">
-					余额明细
+				<view class="balance-head-detail" @click="jumpHistory">
+					提现历史
 					<view class="iconfont iconiconfontjiantou2">
 						
 					</view>
@@ -89,6 +89,7 @@
       			titleText: "首次提现需进行帐号安全验证",
 				buttonText: "确定",
 				cancelText: "取消",
+				withdrawIng: false
 			};
 		},
 		computed: {
@@ -114,6 +115,8 @@
 				})
 			},
 			withdrawDo(){
+				if (this.withdrawIng) return;
+				this.withdrawIng = true;
 				this.$api.withdrawDo(this.list[this.itemIndex]).then((res)=>{
 					this.$store.commit('SET_BALANCE', res.data.balance);
 					uni.showToast({
@@ -121,6 +124,7 @@
 					    title: res.msg,
 					    duration: 2000
 					});
+					this.withdrawIng = false
 				}).catch((err)=>{
 
 					if (err.code == 401) {
@@ -132,6 +136,7 @@
 					    title: err.msg,
 					    duration: 2000
 					});
+					this.withdrawIng = false
 				})
 			},
 			async loginSuccess(res) {
@@ -157,6 +162,12 @@
 						duration: 2000,
 					});
 				}
+			},
+
+			jumpHistory() {
+				uni.navigateTo({
+					url: "/pages/withdraw/history"
+				})
 			},
 
 			loginFail(res) {
