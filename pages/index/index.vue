@@ -130,7 +130,8 @@
 				loginShow: false,
 				ShareConfig: {},
 				ad: null,
-				config: getApp().globalData.config
+				config: getApp().globalData.config,
+				lotteryDoing: false
 			}
 		},
 		computed: {
@@ -207,6 +208,8 @@
 					});
 					return
 				}
+				if (this.lotteryDoing) return
+				this.lotteryDoing = true
 				this.$api.lotteryDo().then((res)=>{
 					this.$store.commit('SET_LOTTERYNUM', this.lotteryNum - 1);
 					this.award = res.data.award
@@ -231,6 +234,9 @@
 						uni.vibrateShort({
 						    
 						});
+
+						this.lotteryDoing = false
+
 						this.openLotteryModal()
 						animation.rotate(0).step({duration: 0})
 						this.animationData = animation.export()
@@ -241,6 +247,8 @@
 					    title: err.msg,
 					    duration: 2000
 					});
+
+					this.lotteryDoing = false
 				})
 			},
 			openHongbao(){

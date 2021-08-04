@@ -32,7 +32,7 @@ http.delete('user/1').then((res)=>{
 */
 export default {
 	config: {
-		baseUrl: "http://zhongyong.wxneed.com", //http://zhongyong.wxneed.com  https://zy-api.wxthe.com
+		baseUrl: "https://zy-api.wxthe.com", //http://zhongyong.wxneed.com  https://zy-api.wxthe.com
 		header: {
 			'Content-Type':'application/json;charset=UTF-8',
 		},  

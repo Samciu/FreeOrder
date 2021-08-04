@@ -16,7 +16,7 @@
 						复制链接
 					</view>
 				</view>
-				<button plain class="modal-content-body-question" @click="goStudy">操作教程</button>
+				<button plain class="modal-content-body-question" @click="study">操作教程</button>
 			</view>
 			<image src="/static/images/close.png" mode="" class="modal-content-cancel" @click.stop="closeModal"></image>
 		</view>
@@ -55,10 +55,19 @@ export default {
 			});
 		},
 		goStudy(){
-			let url = eleTask.package.auth.study
+			let url = this.eleTask.package.auth.study
 			uni.navigateTo({
 				url: '/pages/webview/webview?url=' + url
 			});
+		},
+		study() {
+			const url = this.eleTask?.package?.auth?.video || ""
+			uni.navigateTo({
+				url: '/pages/study/study?url=' + url
+			});
+		},
+		handle() {
+
 		}
 	}
 };

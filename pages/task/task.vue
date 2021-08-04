@@ -145,7 +145,7 @@
 					uni.navigateToMiniProgram({
 						appId: tashDetail.package.minapp.appid,
 						path: tashDetail.package.minapp.path,
-						success(res) {
+						success: (res) => {
 							// 打开成功
 							this.fetchTaskDo(tashDetail)
 						}

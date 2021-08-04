@@ -1,0 +1,97 @@
+{
+	"name": "外卖免单宝小程序",
+	"id": "zy-free-order",
+	"displayName": "外卖免单宝",
+	"version": "1.2.1",
+	"description": "外卖裂变任务宝，任务包含领外卖CPS红包，视频激励广告，刷公众号文章阅读数，好友裂变抽奖得现金。外卖佣金加流量主多重收益",
+	"main": "main.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": "https://github.com/Samciu",
+	"keywords": [
+        "外卖CPS",
+        "视频激励广告",
+        "公众号阅读",
+        "好友裂变",
+        "流量主"
+    ],
+	"engines": {
+		"HBuilderX": "^3.1.1"
+	},
+	"author": "",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/dcloudio/uni-template-admin/issues"
+	},
+	"homepage": "https://github.com/dcloudio/uni-template-admin#readme",
+	"dependencies": {
+		"element-ui": "^2.15.1",
+		"vue-json-excel": "^0.3.0"
+	},
+	"dcloudext": {
+		"category": [
+			"uniCloud",
+			"云端一体项目模板"
+		],
+		"sale": {
+			"regular": {
+				"price": "0.00"
+			},
+			"sourcecode": {
+				"price": "0.00"
+			}
+		},
+		"contact": {
+			"qq": ""
+		},
+		"declaration": {
+			"ads": "无",
+			"data": "无",
+			"permissions": "无"
+		},
+		"npmurl": ""
+	},
+	"uni_modules": {
+		"dependencies": [],
+		"encrypt": [
+		   
+        ],
+		"platforms": {
+			"cloud": {
+				"tcb": "y",
+				"aliyun": "y"
+			},
+			"client": {
+				"App": {
+					"app-vue": "y",
+					"app-nvue": "y"
+				},
+				"H5-mobile": {
+					"Safari": "y",
+					"Android Browser": "y",
+					"微信浏览器(Android)": "y",
+					"QQ浏览器(Android)": "y"
+				},
+				"H5-pc": {
+					"Chrome": "y",
+					"IE": "y",
+					"Edge": "y",
+					"Firefox": "y",
+					"Safari": "y"
+				},
+				"小程序": {
+					"微信": "y",
+					"阿里": "y",
+					"百度": "y",
+					"字节跳动": "y",
+					"QQ": "y"
+				},
+				"快应用": {
+					"华为": "u",
+					"联盟": "u"
+				}
+			}
+		}
+	}
+}
