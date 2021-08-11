@@ -126,7 +126,7 @@
 					});
 					this.withdrawIng = false
 				}).catch((err)=>{
-
+					this.withdrawIng = false
 					if (err.code == 401) {
 						return this.show = true;
 					}
@@ -136,7 +136,6 @@
 					    title: err.msg,
 					    duration: 2000
 					});
-					this.withdrawIng = false
 				})
 			},
 			async loginSuccess(res) {
