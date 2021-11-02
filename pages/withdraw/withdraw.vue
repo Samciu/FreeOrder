@@ -125,8 +125,10 @@
 					    duration: 2000
 					});
 					this.withdrawIng = false
+					this.getWithdrawInfo()
 				}).catch((err)=>{
 					this.withdrawIng = false
+					this.getWithdrawInfo()
 					if (err.code == 401) {
 						return this.show = true;
 					}

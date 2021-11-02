@@ -2,7 +2,7 @@
 	"name": "外卖免单宝小程序",
 	"id": "zy-free-order",
 	"displayName": "外卖免单宝",
-	"version": "1.2.2",
+	"version": "1.2.3",
 	"description": "外卖裂变任务宝，任务包含领外卖CPS红包，视频激励广告，刷公众号文章阅读数，好友裂变抽奖得现金。外卖佣金加流量主多重收益",
 	"main": "main.js",
 	"scripts": {
