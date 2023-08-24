@@ -2,7 +2,7 @@
 	"name": "外卖免单宝小程序",
 	"id": "zy-free-order",
 	"displayName": "外卖免单宝",
-	"version": "1.2.3",
+	"version": "1.2.4",
 	"description": "外卖裂变任务宝，任务包含领外卖CPS红包，视频激励广告，刷公众号文章阅读数，好友裂变抽奖得现金。外卖佣金加流量主多重收益",
 	"main": "main.js",
 	"scripts": {
@@ -29,12 +29,8 @@
 		"element-ui": "^2.15.1",
 		"vue-json-excel": "^0.3.0"
 	},
-	"dcloudext": {
-		"category": [
-			"uniCloud",
-			"云端一体项目模板"
-		],
-		"sale": {
+    "dcloudext": {
+        "sale": {
 			"regular": {
 				"price": "0.00"
 			},
@@ -43,14 +39,15 @@
 			}
 		},
 		"contact": {
-			"qq": ""
+			"qq": "337429788"
 		},
 		"declaration": {
 			"ads": "无",
 			"data": "无",
 			"permissions": "无"
 		},
-		"npmurl": ""
+        "npmurl": "",
+        "type": "unicloud-template-project"
 	},
 	"uni_modules": {
 		"dependencies": [],

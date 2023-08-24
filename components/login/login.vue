@@ -15,7 +15,10 @@
 					微信一键登录
 				</button>
 			</view>
-			<view class="content-agree">授权登录即表示已阅读并同意《隐私协议》</view>
+			<view class="content-agree" >
+				<checkbox class="checkbox" :checked="checked" @click="toggleCheck" />
+				<div @click="jumpToPrivacy">请你阅读并同意《隐私协议》</div>
+			</view>
 		</view>
 	</view>
 </template>
@@ -27,15 +30,24 @@ export default {
 	name:"login",
 	data() {
 		return {
-			config: getApp().globalData.config
+			config: getApp().globalData.config,
+			checked: false
 		};
 	},
 	methods: {
+		jumpToPrivacy() {
+			uni.navigateTo({
+				url: "/pages/privacy/privacy",
+			});
+		},
 		handle(){
 			return
 		},
 		closeModal(){
 			this.$emit('close')
+		},
+		toggleCheck() {
+			this.checked = !this.checked
 		},
 		async getUserInfo(e) {
 			const { errMsg, userInfo } = e.detail;
@@ -66,6 +78,13 @@ export default {
 			}
 		},
 		async getUserProfile() {
+			if (!this.checked) {
+				uni.showToast({
+				icon: "none",
+				title: '请先阅读并同意《隐私协议》',
+				});
+				return
+			}
 			const [userProfile, login] = await Promise.all([
 				uni.getUserProfile({
 				desc: "用于完善会员资料",
@@ -158,9 +177,13 @@ export default {
 
 		}
 		&-agree{
+			padding-bottom: calc(env(safe-area-inset-bottom));
 			font-size: 26rpx;
 			text-align: center;
 			color: #919293;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 	}
 
